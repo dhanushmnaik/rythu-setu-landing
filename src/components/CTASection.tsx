@@ -6,6 +6,8 @@ interface CTASectionProps {
   onLoginClick: () => void;
 }
 
+const WHATSAPP_LINK = "https://wa.me/919876543210?text=Hi%20Rythu%20Setu"; // Replace with your WhatsApp number
+
 const CTASection = ({ onSignUpClick, onLoginClick }: CTASectionProps) => {
   return (
     <section className="py-20 md:py-28 hero-gradient relative overflow-hidden">
@@ -26,22 +28,24 @@ const CTASection = ({ onSignUpClick, onLoginClick }: CTASectionProps) => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
+              variant="whatsapp" 
+              size="xl" 
+              className="text-lg bg-primary-foreground text-primary hover:bg-primary-foreground/90"
+              asChild
+            >
+              <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">
+                <MessageCircle className="w-6 h-6" />
+                Chat on WhatsApp
+              </a>
+            </Button>
+            <Button 
               variant="hero" 
               size="xl" 
               className="text-lg"
               onClick={onSignUpClick}
             >
-              <MessageCircle className="w-6 h-6" />
               Sign Up Now
               <ArrowRight className="w-5 h-5" />
-            </Button>
-            <Button 
-              variant="outline" 
-              size="xl" 
-              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground text-lg"
-              onClick={onLoginClick}
-            >
-              Login
             </Button>
           </div>
         </div>
