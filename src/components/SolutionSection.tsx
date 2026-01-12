@@ -1,14 +1,19 @@
-import { Mic2, Wheat, Clock, CloudSun, HeadphonesIcon } from "lucide-react";
+import { Mic2, Wheat, Clock, CloudSun, MessageSquareText } from "lucide-react";
 
 const solutions = [
   {
     icon: Mic2,
-    title: "Voice-to-Voice AI",
-    description: "Speak naturally, get spoken answers",
+    title: "Voice Input",
+    description: "Speak your query in your language",
+  },
+  {
+    icon: MessageSquareText,
+    title: "Text Responses",
+    description: "Get clear text guidance on WhatsApp",
   },
   {
     icon: Wheat,
-    title: "Local Language Guidance",
+    title: "Local Language",
     description: "Telugu, Tamil, Kannada & more",
   },
   {
@@ -20,11 +25,6 @@ const solutions = [
     icon: CloudSun,
     title: "Daily Alerts",
     description: "Weather & mandi price updates",
-  },
-  {
-    icon: HeadphonesIcon,
-    title: "Expert Callback",
-    description: "Human experts when AI isn't enough",
   },
 ];
 

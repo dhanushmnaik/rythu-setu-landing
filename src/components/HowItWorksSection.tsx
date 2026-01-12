@@ -1,4 +1,4 @@
-import { MessageSquare, Brain, Volume2, Phone } from "lucide-react";
+import { MessageSquare, Brain, MessageSquareText } from "lucide-react";
 
 const steps = [
   {
@@ -17,17 +17,10 @@ const steps = [
   },
   {
     step: 3,
-    icon: Volume2,
-    title: "Get Voice Guidance",
-    description: "Receive clear voice instructions plus weather & price alerts",
+    icon: MessageSquareText,
+    title: "Get Text Guidance",
+    description: "Receive clear text instructions plus weather & price alerts on WhatsApp",
     color: "gold-gradient",
-  },
-  {
-    step: 4,
-    icon: Phone,
-    title: "Expert Callback",
-    description: "If needed, a human expert calls you for complex issues",
-    color: "bg-primary",
   },
 ];
 
@@ -45,24 +38,22 @@ const HowItWorksSection = () => {
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {steps.map((item, index) => (
               <div
                 key={index}
-                className="relative flex gap-4 p-6 bg-card rounded-2xl border border-border hover:shadow-card transition-all duration-300"
+                className="relative flex flex-col items-center text-center p-6 bg-card rounded-2xl border border-border hover:shadow-card transition-all duration-300"
               >
                 {/* Step number */}
-                <div className={`w-12 h-12 ${item.color} rounded-xl flex items-center justify-center flex-shrink-0`}>
-                  <item.icon className="w-6 h-6 text-primary-foreground" />
+                <div className={`w-16 h-16 ${item.color} rounded-2xl flex items-center justify-center mb-4`}>
+                  <item.icon className="w-8 h-8 text-primary-foreground" />
                 </div>
                 
                 <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-semibold text-primary bg-secondary px-2 py-1 rounded-full">
-                      Step {item.step}
-                    </span>
-                  </div>
-                  <h3 className="text-lg font-semibold text-foreground mb-1">
+                  <span className="inline-block text-xs font-semibold text-primary bg-secondary px-3 py-1 rounded-full mb-3">
+                    Step {item.step}
+                  </span>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">
                     {item.title}
                   </h3>
                   <p className="text-muted-foreground text-sm">

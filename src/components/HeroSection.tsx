@@ -6,6 +6,8 @@ interface HeroSectionProps {
   onLoginClick: () => void;
 }
 
+const WHATSAPP_LINK = "https://wa.me/919876543210?text=Hi%20Rythu%20Setu"; // Replace with your WhatsApp number
+
 const HeroSection = ({ onSignUpClick, onLoginClick }: HeroSectionProps) => {
   return (
     <section className="relative overflow-hidden hero-gradient py-16 md:py-24 lg:py-32">
@@ -35,28 +37,30 @@ const HeroSection = ({ onSignUpClick, onLoginClick }: HeroSectionProps) => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: "0.3s" }}>
             <Button 
+              variant="whatsapp" 
+              size="lg" 
+              className="text-lg"
+              asChild
+            >
+              <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer">
+                <MessageCircle className="w-5 h-5" />
+                Chat on WhatsApp
+              </a>
+            </Button>
+            <Button 
               variant="hero" 
               size="lg" 
               className="text-lg"
               onClick={onSignUpClick}
             >
-              <MessageCircle className="w-5 h-5" />
               Get Started
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
-              onClick={onLoginClick}
-            >
-              Login
             </Button>
           </div>
 
           {/* WhatsApp indicator */}
           <div className="mt-8 flex items-center justify-center gap-2 text-primary-foreground/70 animate-fade-up" style={{ animationDelay: "0.4s" }}>
             <Mic className="w-5 h-5 animate-pulse-soft" />
-            <span className="text-sm">Voice messages supported • Works on WhatsApp</span>
+            <span className="text-sm">Send voice message • Get text response on WhatsApp</span>
           </div>
         </div>
       </div>
