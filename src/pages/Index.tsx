@@ -1,12 +1,62 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
+import ProblemSection from "@/components/ProblemSection";
+import SolutionSection from "@/components/SolutionSection";
+import ValueSection from "@/components/ValueSection";
+import HowItWorksSection from "@/components/HowItWorksSection";
+import WhyNowSection from "@/components/WhyNowSection";
+import FounderSection from "@/components/FounderSection";
+import CTASection from "@/components/CTASection";
+import Footer from "@/components/Footer";
+import AuthModal from "@/components/AuthModal";
 
 const Index = () => {
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<"login" | "signup">("signup");
+
+  const handleLoginClick = () => {
+    setAuthMode("login");
+    setAuthModalOpen(true);
+  };
+
+  const handleSignUpClick = () => {
+    setAuthMode("signup");
+    setAuthModalOpen(true);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Header 
+        onLoginClick={handleLoginClick} 
+        onSignUpClick={handleSignUpClick} 
+      />
+      
+      <main>
+        <HeroSection 
+          onSignUpClick={handleSignUpClick}
+          onLoginClick={handleLoginClick}
+        />
+        <ProblemSection />
+        <SolutionSection />
+        <ValueSection />
+        <HowItWorksSection />
+        <WhyNowSection />
+        <FounderSection />
+        <CTASection 
+          onSignUpClick={handleSignUpClick}
+          onLoginClick={handleLoginClick}
+        />
+      </main>
+
+      <Footer />
+
+      <AuthModal 
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        mode={authMode}
+        onModeChange={setAuthMode}
+      />
     </div>
   );
 };
