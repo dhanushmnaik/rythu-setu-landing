@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rythu Setu – Instant Farming Advice in Your Language | Voice AI for Farmers</title>
+  <meta name="description" content="Get correct crop guidance, right dosage, daily weather & mandi prices through simple voice messages on WhatsApp. Trusted by farmers across South India.">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --primary: #2d6a4f;
+      --primary-light: #40916c;
+      --primary-dark: #1b4332;
+      --accent: #f59e0b;
+      --accent-light: #fbbf24;
+      --background: #fafdf9;
+      --foreground: #1a3025;
+      --muted: #6b7c74;
+      --card: #ffffff;
+      --border: #d4e5dc;
+      --secondary: #e8f5e9;
+      --destructive: #ef4444;
+      --whatsapp: #25d366;
+    }
+    
+    body {
+      font-family: 'Poppins', system-ui, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .logo-icon svg { width: 28px; height: 28px; color: white; }
+    
+    .logo-text {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .logo-tagline {
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+    
+    .header-buttons {
+      display: flex;
+      gap: 0.75rem;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      border: none;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 14px -4px rgba(45, 106, 79, 0.35);
+    }
+    
+    .btn-primary:hover { background: var(--primary-light); }
+    
+    .btn-soft {
+      background: rgba(45, 106, 79, 0.1);
+      color: var(--primary);
+      border: 1px solid rgba(45, 106, 79, 0.2);
+    }
+    
+    .btn-soft:hover { background: rgba(45, 106, 79, 0.2); }
+    
+    .btn-hero {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      color: white;
+      box-shadow: 0 4px 14px -4px rgba(245, 158, 11, 0.35);
+    }
+    
+    .btn-hero:hover { opacity: 0.9; }
+    
+    .btn-whatsapp {
+      background: var(--whatsapp);
+      color: white;
+      box-shadow: 0 4px 14px -4px rgba(37, 211, 102, 0.35);
+    }
+    
+    .btn-whatsapp:hover { background: #20bd5a; }
+    
+    .btn-outline-white {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+    
+    .btn-outline-white:hover { background: rgba(255,255,255,0.1); }
+    
+    .btn-lg { padding: 1rem 2rem; font-size: 1.125rem; }
+    .btn-xl { padding: 1.25rem 2.5rem; font-size: 1.25rem; }
+    
+    .btn svg { width: 20px; height: 20px; }
+    
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, #52b788 100%);
+      padding: 4rem 0 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      width: 128px;
+      height: 128px;
+      background: var(--accent);
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.15;
+    }
+    
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      width: 192px;
+      height: 192px;
+      background: white;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.1;
+    }
+    
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero-tagline {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+    
+    .hero-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: rgba(255,255,255,0.9);
+      max-width: 640px;
+      margin: 0 auto 2rem;
+    }
+    
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    
+    .hero-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.875rem;
+    }
+    
+    .hero-note svg { width: 20px; height: 20px; }
+    
+    /* Sections */
+    .section { padding: 4rem 0; }
+    .section-alt { background: linear-gradient(180deg, var(--background) 0%, var(--secondary) 100%); }
+    
+    .section-title {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 0.75rem;
+    }
+    
+    .section-subtitle {
+      color: var(--muted);
+      font-size: 1.125rem;
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 3rem;
+    }
+    
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .cards-grid-4 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .cards-grid-5 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+    .cards-grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .cards-grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); max-width: 900px; margin: 0 auto; }
+    
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    
+    .card:hover {
+      box-shadow: 0 8px 30px -8px rgba(45, 106, 79, 0.12);
+    }
+    
+    .card-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    
+    .card-icon svg { width: 28px; height: 28px; }
+    
+    .card-icon-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+    }
+    
+    .card-icon-destructive {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--destructive);
+    }
+    
+    .card-icon-whatsapp { background: var(--whatsapp); color: white; }
+    .card-icon-gold { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%); color: white; }
+    
+    .card-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .card-text {
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+    
+    .card-center { text-align: center; }
+    .card-center .card-icon { margin: 0 auto 1rem; width: 64px; height: 64px; border-radius: 16px; }
+    .card-center .card-icon svg { width: 32px; height: 32px; }
+    
+    /* Value Cards */
+    .value-card {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+    
+    .value-card .card-icon { flex-shrink: 0; background: var(--secondary); color: var(--primary); }
+    
+    .value-title { font-size: 1.25rem; font-weight: 700; }
+    .value-subtitle { font-size: 0.875rem; font-weight: 500; color: var(--primary); margin-bottom: 0.25rem; }
+    
+    /* Step Cards */
+    .step-badge {
+      display: inline-block;
+      background: var(--secondary);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 0.75rem;
+    }
+    
+    /* Why Now */
+    .reason-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--secondary);
+      padding: 1.25rem;
+      border-radius: 12px;
+    }
+    
+    .reason-card .card-icon { margin: 0; flex-shrink: 0; }
+    .reason-card span { font-weight: 500; }
+    
+    /* Founder */
+    .founder-card {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 24px;
+      padding: 2.5rem;
+      box-shadow: 0 8px 30px -8px rgba(45, 106, 79, 0.12);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    
+    .quote-icon {
+      position: absolute;
+      top: -16px;
+      left: 32px;
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    
+    .quote-icon svg { width: 24px; height: 24px; }
+    
+    blockquote {
+      font-size: 1.375rem;
+      font-weight: 500;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      padding-top: 1rem;
+    }
+    
+    .founder-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .founder-avatar {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    
+    .founder-name { font-weight: 600; }
+    .founder-role { font-size: 0.875rem; color: var(--muted); }
+    
+    /* CTA */
+    .cta {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, #52b788 100%);
+      padding: 5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta::before, .cta::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.1;
+    }
+    
+    .cta::before { top: 0; right: 0; width: 256px; height: 256px; background: var(--accent); }
+    .cta::after { bottom: 0; left: 0; width: 192px; height: 192px; background: white; }
+    
+    .cta-content {
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .cta-title {
+      font-size: clamp(1.75rem, 5vw, 3rem);
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+    }
+    
+    .cta-subtitle {
+      font-size: 1.25rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 2.5rem;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    
+    .btn-cta-whatsapp {
+      background: white;
+      color: var(--primary);
+    }
+    
+    .btn-cta-whatsapp:hover { background: rgba(255,255,255,0.9); }
+    
+    /* Footer */
+    .footer {
+      background: var(--foreground);
+      padding: 3rem 0 2rem;
+    }
+    
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .footer-brand .logo-icon {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+    }
+    
+    .footer-brand .logo-text { color: white; }
+    
+    .footer-desc {
+      color: rgba(255,255,255,0.6);
+      margin-top: 1rem;
+      max-width: 320px;
+      font-size: 0.875rem;
+    }
+    
+    .footer-heading {
+      color: white;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li { margin-bottom: 0.5rem; }
+    
+    .footer-links a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+    
+    .footer-links a:hover { color: white; }
+    
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 1.5rem;
+      text-align: center;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.875rem;
+    }
+    
+    /* Mobile Menu */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    
+    .mobile-menu-btn svg { width: 24px; height: 24px; color: var(--foreground); }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-buttons { display: none; }
+      .mobile-menu-btn { display: block; }
+      
+      .hero { padding: 3rem 0 4rem; }
+      .hero-title { font-size: 2rem; }
+      .hero-subtitle { font-size: 1rem; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .hero-buttons .btn { width: 100%; max-width: 300px; }
+      
+      .section { padding: 3rem 0; }
+      .cards-grid-5, .cards-grid-4, .cards-grid-3 { grid-template-columns: 1fr; }
+      
+      .footer-grid { grid-template-columns: 1fr; text-align: center; }
+      .footer-desc { margin: 1rem auto 0; }
+      .footer-brand .logo { justify-content: center; }
+      
+      .founder-card { padding: 1.5rem; }
+      blockquote { font-size: 1.125rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-content">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>
+        </div>
+        <div>
+          <div class="logo-text">RYTHU SETU</div>
+          <div class="logo-tagline">A Voice Farmer Can Trust</div>
+        </div>
+      </div>
+      <div class="header-buttons">
+        <button class="btn btn-soft">Login</button>
+        <button class="btn btn-primary">Sign Up</button>
+      </div>
+      <button class="mobile-menu-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-content">
+      <p class="hero-tagline">🌾 A Farmer's Voice Deserves Answers, Not Assumptions.</p>
+      <h1 class="hero-title">Instant Farming Advice in Your Own Language</h1>
+      <p class="hero-subtitle">Get correct crop guidance, right dosage, daily weather & mandi prices – through simple voice messages on WhatsApp.</p>
+      <div class="hero-buttons">
+        <a href="https://wa.me/919876543210?text=Hi%20Rythu%20Setu" target="_blank" class="btn btn-whatsapp btn-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+          Chat on WhatsApp
+        </a>
+        <button class="btn btn-hero btn-lg">Get Started</button>
+      </div>
+      <div class="hero-note">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+        <span>Send voice message • Get text response on WhatsApp</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problems -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Problems Farmers Face</h2>
+      <p class="section-subtitle">Everyday challenges that cost farmers money and peace of mind</p>
+      <div class="cards-grid cards-grid-4">
+        <div class="card">
+          <div class="card-icon card-icon-destructive">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+          </div>
+          <h3 class="card-title">Confusing Dosage</h3>
+          <p class="card-text">Wrong chemical quantities damage crops and soil</p>
+        </div>
+        <div class="card">
+          <div class="card-icon card-icon-destructive">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 15h8"/><path d="M9 9h.01"/><path d="M15 9h.01"/></svg>
+          </div>
+          <h3 class="card-title">Biased Dealer Advice</h3>
+          <p class="card-text">Dealers push expensive products, not the right ones</p>
+        </div>
+        <div class="card">
+          <div class="card-icon card-icon-destructive">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg>
+          </div>
+          <h3 class="card-title">No Clear Mandi Prices</h3>
+          <p class="card-text">Farmers sell at low prices without market info</p>
+        </div>
+        <div class="card">
+          <div class="card-icon card-icon-destructive">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12a5 5 0 0 0 5 5 8 8 0 0 1 5 2 8 8 0 0 1 5-2 5 5 0 0 0 5-5V7h-5a8 8 0 0 0-5 2 8 8 0 0 0-5-2H2Z"/><path d="M6 11c1.5 0 3 .5 3 2-2 0-3 0-3-2Z"/><path d="m2 12 2-2"/><path d="m22 12-2-2"/></svg>
+          </div>
+          <h3 class="card-title">Late Weather Alerts</h3>
+          <p class="card-text">Missing timely warnings means crop losses</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions -->
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">How Rythu Setu Helps</h2>
+      <p class="section-subtitle">Simple, voice-first solutions designed for busy farmers</p>
+      <div class="cards-grid cards-grid-5">
+        <div class="card card-center">
+          <div class="card-icon card-icon-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+          </div>
+          <h3 class="card-title">Voice Input</h3>
+          <p class="card-text">Speak your query in your language</p>
+        </div>
+        <div class="card card-center">
+          <div class="card-icon card-icon-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M13 8H7"/><path d="M17 12H7"/></svg>
+          </div>
+          <h3 class="card-title">Text Responses</h3>
+          <p class="card-text">Get clear text guidance on WhatsApp</p>
+        </div>
+        <div class="card card-center">
+          <div class="card-icon card-icon-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v12"/><path d="M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M15 6a9 9 0 0 0-9 9"/><path d="M18 15v6"/><path d="M21 18h-6"/></svg>
+          </div>
+          <h3 class="card-title">Local Language</h3>
+          <p class="card-text">Telugu, Tamil, Kannada & more</p>
+        </div>
+        <div class="card card-center">
+          <div class="card-icon card-icon-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3 class="card-title">Right Input, Right Time</h3>
+          <p class="card-text">Precise dosage recommendations</p>
+        </div>
+        <div class="card card-center">
+          <div class="card-icon card-icon-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 4.93-1.41 1.41"/><path d="M15.947 12.65a4 4 0 0 0-5.925-4.128"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/></svg>
+          </div>
+          <h3 class="card-title">Daily Alerts</h3>
+          <p class="card-text">Weather & mandi price updates</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Value -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Why Farmers Trust Rythu Setu</h2>
+      <p class="section-subtitle">Real benefits that make a real difference</p>
+      <div class="cards-grid cards-grid-2">
+        <div class="card value-card">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg>
+          </div>
+          <div>
+            <h3 class="value-title">Save ₹6,000–₹12,000</h3>
+            <p class="value-subtitle">per acre per season</p>
+            <p class="card-text">Reduce wasteful spending on wrong inputs</p>
+          </div>
+        </div>
+        <div class="card value-card">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+          </div>
+          <div>
+            <h3 class="value-title">Less Chemical Waste</h3>
+            <p class="value-subtitle">Protect your soil</p>
+            <p class="card-text">Right dosage means healthier crops and land</p>
+          </div>
+        </div>
+        <div class="card value-card">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          </div>
+          <div>
+            <h3 class="value-title">Better Yield</h3>
+            <p class="value-subtitle">Improved income</p>
+            <p class="card-text">Timely advice leads to better harvests</p>
+          </div>
+        </div>
+        <div class="card value-card">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+          </div>
+          <div>
+            <h3 class="value-title">WhatsApp Access</h3>
+            <p class="value-subtitle">No new app to learn</p>
+            <p class="card-text">Use what you already know and trust</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-subtitle">Simple as sending a WhatsApp message</p>
+      <div class="cards-grid cards-grid-3" style="max-width: 1000px; margin: 0 auto;">
+        <div class="card card-center">
+          <div class="card-icon card-icon-whatsapp">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+          </div>
+          <span class="step-badge">Step 1</span>
+          <h3 class="card-title">Send Voice Message</h3>
+          <p class="card-text">Farmer sends a voice message on WhatsApp about their crop issue</p>
+        </div>
+        <div class="card card-center">
+          <div class="card-icon card-icon-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M19.938 10.5a4 4 0 0 1 .585.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M19.967 17.484A4 4 0 0 1 18 18"/></svg>
+          </div>
+          <span class="step-badge">Step 2</span>
+          <h3 class="card-title">AI Understands</h3>
+          <p class="card-text">Our AI understands your crop, problem, and local conditions</p>
+        </div>
+        <div class="card card-center">
+          <div class="card-icon card-icon-gold">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M13 8H7"/><path d="M17 12H7"/></svg>
+          </div>
+          <span class="step-badge">Step 3</span>
+          <h3 class="card-title">Get Text Guidance</h3>
+          <p class="card-text">Receive clear text instructions plus weather & price alerts on WhatsApp</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Now -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Why Now?</h2>
+      <p class="section-subtitle">The perfect time for voice-first farming assistance</p>
+      <div class="cards-grid cards-grid-2" style="max-width: 800px;">
+        <div class="reason-card">
+          <div class="card-icon card-icon-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+          </div>
+          <span>Farmers already use WhatsApp daily</span>
+        </div>
+        <div class="reason-card">
+          <div class="card-icon card-icon-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+          </div>
+          <span>Voice is preferred over typing or apps</span>
+        </div>
+        <div class="reason-card">
+          <div class="card-icon card-icon-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>
+          </div>
+          <span>Climate uncertainty is increasing</span>
+        </div>
+        <div class="reason-card">
+          <div class="card-icon card-icon-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
+          </div>
+          <span>AI + voice technology is now affordable</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Founder -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="founder-card">
+        <div class="quote-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg>
+        </div>
+        <blockquote>
+          "I didn't just study farming – I grew up with it. As a farmer's daughter, I've seen the confusion, fear, and loss. That's why I'm building Rythu Setu."
+        </blockquote>
+        <div class="founder-info">
+          <div class="founder-avatar">👩‍🌾</div>
+          <div>
+            <p class="founder-name">Founder's Story</p>
+            <p class="founder-role">Rythu Setu</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container cta-content">
+      <h2 class="cta-title">Start Farming with Confidence</h2>
+      <p class="cta-subtitle">Join thousands of farmers who trust Rythu Setu for daily guidance</p>
+      <div class="cta-buttons">
+        <a href="https://wa.me/919876543210?text=Hi%20Rythu%20Setu" target="_blank" class="btn btn-cta-whatsapp btn-xl">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+          Chat on WhatsApp
+        </a>
+        <button class="btn btn-hero btn-xl">
+          Sign Up Now
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">
+            <div class="logo-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>
+            </div>
+            <span class="logo-text">RYTHU SETU</span>
+          </div>
+          <p class="footer-desc">A Voice Farmer Can Trust. Instant farming advice in your language through WhatsApp.</p>
+        </div>
+        <div>
+          <h4 class="footer-heading">Company</h4>
+          <ul class="footer-links">
+            <li><a href="#">About Rythu Setu</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-heading">Legal</h4>
+          <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Rythu Setu. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
